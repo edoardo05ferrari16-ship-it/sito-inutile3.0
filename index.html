@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il sito inutile</title>
+<style>
+  body {
+    margin:0;
+    background:#000;
+    color:white;
+    font-family:Arial, sans-serif;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    transition:background 0.3s;
+  }
+  #msg {
+    position:absolute;
+    top:12%;
+    font-size:2.2rem;
+    text-align:center;
+    padding:0 30px;
+    max-width:85%;
+    z-index:10;
+    line-height:1.4;
+  }
+  #btn {
+    background:red;
+    color:white;
+    border:none;
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    font-size:2.2rem;
+    font-weight:bold;
+    cursor:pointer;
+    z-index:10;
+    transition:opacity 0.3s;
+  }
+  #btn:active {transform:scale(0.92)}
+  #btn.hidden {opacity:0; pointer-events:none}
+  #overlay {
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    z-index:5;
+    display:none;
+  }
+  #crack {
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background:url('https://i.imgur.com/An9ZCWu.jpg') center/cover no-repeat;
+    pointer-events:none;
+    z-index:8;
+    opacity:0;
+    transition:opacity 0.4s;
+  }
+  #crack.show {opacity:0.9}
+.boom {animation:shake 0.08s 12}
+  @keyframes shake {
+    0%{transform:translate(0,0)}25%{transform:translate(8px,5px)}
+    50%{transform:translate(0,0)}75%{transform:translate(-8px,5px)}
+    100%{transform:translate(0,0)}
+  }
+.red {background:#2a0000}
+</style>
+</head>
+<body>
+  <div id="msg"></div>
+  <button id="btn">CLICCA</button>
+  <div id="overlay"></div>
+  <div id="crack"></div>
+
+<script>
+const msgs = [
+"questo sito è inutile, non cliccare",
+"ti ho detto che è inultile",
+"ancora qua stai?",
+"stai perdendo tempo",
+"non serve a niente questo pulsante",
+"...",
+"non te ne sei andato? sei stupido.",
+"basta stressarmi..",
+"hai rotto",
+"intanto non ti porterà da nessuna parte continuare a cliccare",
+"e va bene lo hai voluto te",
+"ora se non la smetti di cliccare, farò qualcosa di brutto",
+"non continuare, io non lo farei se fossi in te..",
+"ok, lo hai voluto te..",
+"..ora farò partire un timer da 3 a 0 e farò morire tutte le persone",
+"3",
+"2",
+"proprio non capisci quanto è grave vero? beata ignoranza",
+"1",
+"boom💥",
+"ora ti sentirai felice che hai ucciso tutte le persone del pianeta vero?",
+"non è abbastanza da farti andar via e lasciarmi in pace..",
+"ok ora ti spacco il telefono",
+"COME FA A FUNZIONARTI ANCORA IL TELEFONO?!",
+"SEI UN ALIENO?",
+"o sei un alieno o questa è impossibile",
+"non hai niente da fare che restare qua a cliccarmi..",
+"HAI PERSINO UCCISO L'INTERA POPOLAZIONE!",
+"proprio non capisci che sono più forte di te?",
+"ho poteri molto potenti",
+"ok ti riaggiusto il telefono",
+"ora sei felice? 😒",
+"bravo cane, continui a darmi fastido nhe?",
+"vieni bello, la vuoi la pappa?",
+"come riesco a farti smettere?😫",
+"HO UN'IDEA",
+"AH HA! COSÌ NON MI PUOI CLICCARE!",
+"SONO TROPPO INTELLIGENTE!",
+"...",
+"...",
+"...",
+"ok mi hai beccato, mi ero pitturato di nero per confondermi",
+"niente fratm, come posso farmi lasciare stare da te?",
+"mhmmm...",
+"HO UN'IDEA GENIALE! ascolta",
+"visto che sei rimasto l'unca persona sulla terra, posso far esplodere il tuo pianeta, così...",
+"...non mi darai più fastidio..lo so..",
+"sono um genio..",
+"..non c'è bisogno di complimentarsi",
+"non ti importa neanche del tuo pianeta?!",
+"sei un mostro!..",
+"prima la popolazione mondiale e ora la Terra..?!",
+"sei peggio di me...",
+"davvero non ti importa?!",
+"ok, lo hai voluto te..",
+"KABOOM! 💥💥🫯⚡",
+"SEI...ANCORA..Q..U...A!?",
+"CHE ESSERE SEI?😳😨",
+"TE NON SEI UMANO PER ESSERE SOPRAVVISSUTO ALLA DISTRUZIONE TERRESTRE!",
+"io mi astengo..",
+"questo sito esploderà tra:",
+"10","9","8","7","6","5","4","3","2","1","0",
+"questo sito non esiste più."
+];
+
+let i = 0;
+const btn = document.getElementById('btn');
+const msg = document.getElementById('msg');
+const crack = document.getElementById('crack');
+const overlay = document.getElementById('overlay');
+
+function nextMsg() {
+  if(i >= msgs.length) return;
+  msg.textContent = msgs[i];
+
+  // Timer 3-2-1 + boom vibra 1s - CORREZIONE 3
+  if(i === 14) {
+    let n = 3;
+    const t = setInterval(() => {
+      msg.textContent = n;
+      n--;
+      if(n < 0) {
+        clearInterval(t);
+        i = 19;
+        msg.textContent = msgs[i];
+        document.body.classList.add('boom','red');
+        setTimeout(() => document.body.classList.remove('boom'), 1000);
+      }
+    }, 1000);
+    i++;
+    return;
+  }
+
+  // Crepa reale - CORREZIONE 2 e 6
+  if(i === 22) crack.classList.add('show');
+
+  // Si aggiusta - CORREZIONE 2
+  if(i === 30) crack.classList.remove('show');
+
+  // Pulsante sparisce - CORREZIONE 4
+  if(i === 35) {
+    btn.classList.add('hidden');
+    overlay.style.display = 'block';
+    i++;
+    return;
+  }
+
+  // Pulsante riappare cliccando schermo - CORREZIONE 4
+  if(i === 41) {
+    btn.classList.remove('hidden');
+    overlay.style.display = 'none';
+  }
+
+  // Secondo boom vibra 1s - CORREZIONE 3
+  if(i === 56) {
+    document.body.classList.add('red','boom');
+    setTimeout(() => document.body.classList.remove('boom'), 1000);
+  }
+
+  // Timer finale 10-0
+  if(i === 61) {
+    let n = 10;
+    msg.textContent = n;
+    const t = setInterval(() => {
+      msg.textContent = n;
+      n--;
+      if(n < 0) {
+        clearInterval(t);
+        i = msgs.length;
+        msg.textContent = msgs[msgs.length-1];
+      }
+    }, 1000);
+    i++;
+    return;
+  }
+  i++;
+}
+
+btn.onclick = nextMsg;
+overlay.onclick = () => {
+  if(btn.classList.contains('hidden')) {
+    btn.classList.remove('hidden');
+    overlay.style.display = 'none';
+    i = 41;
+    msg.textContent = msgs[i];
+    i++;
+  }
+};
+</script>
+</body>
+</html>
